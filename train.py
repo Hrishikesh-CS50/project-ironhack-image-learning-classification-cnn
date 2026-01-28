@@ -16,6 +16,7 @@ def train_model(model, x_train, y_train, batch_size, epochs):
         epochs=epochs,
         validation_split=0.1,
     )
+    model.save("models/model.keras")
     return history
 
 
