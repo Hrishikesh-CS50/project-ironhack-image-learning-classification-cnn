@@ -1,2 +1,6 @@
 # Model artifacts
 models/*.keras
+
+# Python bytecode
+__pycache__/
+*.pyc
