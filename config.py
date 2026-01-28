@@ -1,6 +1,6 @@
 # config.py
 
-LOAD_SAVED_MODEL = True
+LOAD_SAVED_MODEL = False
 
 # Model parameters
 RANDOM_SEED = 42
