@@ -122,3 +122,6 @@ Final model performance and evaluation metrics will be documented here.
 - CNN performance is highly sensitive to architectural choices
 - Iterative experimentation leads to more robust models
 - Clean project structure improves research velocity
+
+Note: Jupyter notebook outputs are stripped automatically during commits for repository hygiene. This does not affect execution or evaluation.
+
