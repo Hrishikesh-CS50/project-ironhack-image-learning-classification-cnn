@@ -14,28 +14,40 @@ def build_model():
 
         # Data Augmentation
         RandomFlip("horizontal"),
-
-        # Block 1
-        Conv2D(32, kernel_size=(3, 3), padding='same'),
+        RandomRotation(0.1), # Small rotation helps with orientation invariance
+        RandomTranslation(0.1, 0.1), 
+        
+        #VGG-style architecture
+        
+        # Block 1 - Double Conv (32 filters)
+        Conv2D(32, (3, 3), padding='same', activation='relu'),
         BatchNormalization(),
-        Activation("relu"),
-        MaxPooling2D(pool_size=(2, 2)),
-
-        # Block 2
-        Conv2D(64, kernel_size=(3, 3), padding='same'),
+        Conv2D(32, (3, 3), padding='same', activation='relu'),
         BatchNormalization(),
-        Activation("relu"),
-        MaxPooling2D(pool_size=(2, 2)),
-
-        # Block 3
-        Conv2D(128, kernel_size=(3, 3), padding='same'),
+        MaxPooling2D((2, 2)),
+        Dropout(0.2),
+        
+        # BLOCK 2: Double Conv (64 filters)
+        Conv2D(64, (3, 3), padding='same', activation='relu'),
         BatchNormalization(),
-        Activation("relu"),
-        MaxPooling2D(pool_size=(2, 2)),
+        Conv2D(64, (3, 3), padding='same', activation='relu'),
+        BatchNormalization(),
+        MaxPooling2D((2, 2)),
+        Dropout(0.3),
+
+        # BLOCK 3: Double Conv (128 filters)
+        Conv2D(128, (3, 3), padding='same', activation='relu'),
+        BatchNormalization(),
+        Conv2D(128, (3, 3), padding='same', activation='relu'),
+        BatchNormalization(),
+        MaxPooling2D((2, 2)),
+        Dropout(0.4),
         
         # Head
         GlobalAveragePooling2D(),
-        Dense(128, activation="relu"),
-        Dense(NUM_CLASSES, activation="softmax"),
+        Dense(256, activation='relu'),
+        BatchNormalization(),
+        Dropout(0.5),
+        Dense(NUM_CLASSES, activation='softmax')
     ])
     return model
