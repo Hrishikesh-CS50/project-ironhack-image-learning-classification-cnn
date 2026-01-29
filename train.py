@@ -1,10 +1,14 @@
 # train.py
+import config
 from keras.callbacks import EarlyStopping
+from keras.optimizers import Adam
 
 
 def compile_model(model):
+    optimizer = Adam(learning_rate=config.LEARNING_RATE)
+
     model.compile(
-        optimizer="SGD",
+        optimizer=optimizer,
         loss="SparseCategoricalCrossentropy",
         metrics=["accuracy"],
     )
@@ -24,6 +28,7 @@ def train_model(model, x_train, y_train, batch_size, epochs):
         batch_size=batch_size,
         epochs=epochs,
         validation_split=0.1,
+        callbacks=[early_stopping]
     )
     return history
 
